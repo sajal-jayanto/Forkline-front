@@ -1,11 +1,13 @@
-const MENU_ITEMS = ['Dashboard', 'Outlets', 'Report'] as const
-export type MenuItem = (typeof MENU_ITEMS)[number]
+import { Button } from 'antd';
+
+const MENU_ITEMS = ['Dashboard', 'Outlets', 'Report'] as const;
+export type MenuItem = (typeof MENU_ITEMS)[number];
 
 type TopBarProps = {
-  title: string
-  activeItem: MenuItem
-  onNavigate: (item: MenuItem) => void
-}
+  title: string;
+  activeItem: MenuItem;
+  onNavigate: (item: MenuItem) => void;
+};
 
 function TopBar({ title, activeItem, onNavigate }: TopBarProps) {
   return (
@@ -29,15 +31,10 @@ function TopBar({ title, activeItem, onNavigate }: TopBarProps) {
             ))}
           </nav>
         </div>
-        <button
-          type="button"
-          className="cursor-pointer rounded-md bg-sand px-4 py-2 text-xs font-semibold text-plum hover:opacity-90"
-        >
-          Sign out
-        </button>
+        <Button className="border-none bg-sand text-xs text-plum hover:opacity-90">Sign out</Button>
       </div>
     </header>
-  )
+  );
 }
 
-export default TopBar
+export default TopBar;
