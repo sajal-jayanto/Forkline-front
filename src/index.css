@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'DM Sans', sans-serif;
+
+  --color-cream: #FDF8F0;
+  --color-cream-border: #EFE6D8;
+  --color-espresso: #341E13;
+  --color-sand: #CFC4B6;
+  --color-plum: #5C3E55;
+
+  --container-page: 1200px;
+}
+
+@layer base {
+  body {
+    @apply bg-cream;
+  }
+}
