@@ -18,7 +18,6 @@ const Dashboard = () => {
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false));
   }, []);
-
   useEffect(() => loadItems(), [loadItems]);
 
   return (
