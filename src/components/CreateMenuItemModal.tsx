@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import { App, Form, Input, InputNumber, Modal } from 'antd';
-import { createMenuItem } from '../http/service/menuItems';
+import { Form, Input, InputNumber, Modal } from 'antd';
+import { useCreateMenuItem } from '../hooks/useCreateMenuItem';
 import OptionalLabel from './OptionalLabel';
 
 type CreateMenuItemModalProps = {
@@ -9,43 +8,11 @@ type CreateMenuItemModalProps = {
   onCreated: () => void;
 };
 
-type FormValues = {
-  name: string;
-  masterPrice: number;
-  description?: string;
-  imageUrl?: string;
-};
-
 const CreateMenuItemModal = ({ open, onClose, onCreated }: CreateMenuItemModalProps) => {
-  const [form] = Form.useForm<FormValues>();
-  const [submitting, setSubmitting] = useState(false);
-  const { notification } = App.useApp();
-
-  const handleFinish = async (values: FormValues) => {
-    setSubmitting(true);
-    try {
-      const item = await createMenuItem({
-        name: values.name,
-        masterPrice: values.masterPrice,
-        description: values.description?.trim() || undefined,
-        imageUrl: values.imageUrl?.trim() || undefined,
-      });
-      notification.success({
-        title: 'Menu item created',
-        description: `"${item.name}" was added successfully.`,
-      });
-      onCreated();
-      onClose();
-    } catch (err) {
-      notification.error({
-        title: 'Could not create menu item',
-        description: err instanceof Error ? err.message : 'Something went wrong',
-      });
-      onClose();
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  const { form, submitting, handleFinish } = useCreateMenuItem({
+    onSuccess: onCreated,
+    onSettled: onClose,
+  });
 
   return (
     <Modal

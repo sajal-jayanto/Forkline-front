@@ -18,7 +18,6 @@ const Dashboard = () => {
           Create menu item
         </Button>
       </div>
-
       <div className="mt-6 rounded-xl border border-cream-border bg-[#EFE6D8] p-4">
         {loading && <p className="text-sm text-espresso/60">Loading menu items…</p>}
         {error && <p className="text-sm text-red-700">{error}</p>}
@@ -54,7 +53,6 @@ const Dashboard = () => {
           </ul>
         )}
       </div>
-
       <CreateMenuItemModal
         open={showCreate}
         onClose={() => setShowCreate(false)}
