@@ -1,10 +1,13 @@
-import { useRevenueReport } from '../hooks/useRevenueReport';
+import { useState } from 'react';
 import { Button } from 'antd';
+import { useRevenueReport } from '../hooks/useRevenueReport';
+import TopSalesModal from '../components/TopSalesModal';
 
 const formatAmount = (value: string) => Number(value).toFixed(2);
 
 const Report = () => {
   const { report, loading, error } = useRevenueReport();
+  const [topSalesOutletId, setTopSalesOutletId] = useState<number | null>(null);
 
   return (
     <section className="py-8">
@@ -41,12 +44,16 @@ const Report = () => {
                 </div>
                 <p className="mt-3 text-xs font-medium text-espresso/60">Revenue</p>
                 <p className="text-xl font-semibold text-plum">${formatAmount(row.totalRevenue)}</p>
-                <Button block className="mt-3">Top sales </Button>
+                <Button block className="mt-3" onClick={() => setTopSalesOutletId(row.outletId)}>
+                  Top sales
+                </Button>
               </li>
             ))}
           </ul>
         )}
       </div>
+
+      <TopSalesModal outletId={topSalesOutletId} onClose={() => setTopSalesOutletId(null)} />
     </section>
   );
 };

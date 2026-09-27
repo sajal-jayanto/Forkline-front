@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Button } from 'antd';
 import type { Outlet } from '../http/service/outlets';
 import { useMenuItems } from '../hooks/useMenuItems';
-import CreateOrderModal, { outletDetails } from '../components/CreateOrderModal';
+import CreateOrderModal from '../components/CreateOrderModal';
+import { outletDetails } from '../utils/menuItem';
 
 type OutletDashboardProps = {
   outlet: Outlet;

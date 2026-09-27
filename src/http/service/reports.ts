@@ -27,3 +27,22 @@ export async function getRevenueByOutlet(
   });
   return data;
 }
+
+export interface TopItem {
+  menuItemId: number;
+  menuItemName: string;
+  quantitySold: number;
+}
+
+export interface TopItemsByOutletReport {
+  outletId: number;
+  outletName: string;
+  items: TopItem[];
+}
+
+export async function getTopItemsByOutlet(outletId: number): Promise<TopItemsByOutletReport> {
+  const { data } = await http.get<TopItemsByOutletReport>('/report/top-items-by-outlet', {
+    params: { outletId },
+  });
+  return data;
+}

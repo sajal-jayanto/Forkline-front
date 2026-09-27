@@ -1,5 +1,6 @@
 import { Button, Form, InputNumber, Modal, Select } from 'antd';
 import type { MenuItem } from '../http/service/menuItems';
+import { outletDetails } from '../utils/menuItem';
 import { useCreateOrder, type CreateOrderFormValues } from '../hooks/useCreateOrder';
 
 type CreateOrderModalProps = {
@@ -8,14 +9,6 @@ type CreateOrderModalProps = {
   menuItems: MenuItem[];
   onClose: () => void;
   onCreated: () => void;
-};
-
-export const outletDetails = (item: MenuItem) => {
-  const outletItem = item.outletMenuItems?.[0];
-  return {
-    price: Number(outletItem?.priceOverride ?? item.masterPrice),
-    available: outletItem?.availableUnit ?? 0,
-  };
 };
 
 const CreateOrderModal = ({
