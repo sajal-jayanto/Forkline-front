@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from 'antd';
 import type { Outlet } from '../http/service/outlets';
 import { useMenuItems } from '../hooks/useMenuItems';
-import CreateOrderModal from '../components/CreateOrderModal';
+import CreateOrderModal, { outletDetails } from '../components/CreateOrderModal';
 
 type OutletDashboardProps = {
   outlet: Outlet;
@@ -54,7 +54,7 @@ const OutletDashboard = ({ outlet, onBack }: OutletDashboardProps) => {
                     <div className="flex items-start justify-between gap-2">
                       <h3 className="font-semibold text-espresso">{item.name}</h3>
                       <span className="text-sm font-semibold text-plum">
-                        ${Number(item.masterPrice).toFixed(2)}
+                        ${Number(outletDetails(item).price).toFixed(2)}
                       </span>
                     </div>
                     <p className="mt-1 line-clamp-2 text-xs text-espresso/60">{item.description}</p>

@@ -10,7 +10,7 @@ type CreateOrderModalProps = {
   onCreated: () => void;
 };
 
-const outletDetails = (item: MenuItem) => {
+export const outletDetails = (item: MenuItem) => {
   const outletItem = item.outletMenuItems?.[0];
   return {
     price: Number(outletItem?.priceOverride ?? item.masterPrice),
