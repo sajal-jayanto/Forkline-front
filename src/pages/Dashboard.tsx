@@ -1,24 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from 'antd';
-import { getMenuItems, type MenuItem } from '../http/service/menuItems';
+import { useMenuItems } from '../hooks/useMenuItems';
 import CreateMenuItemModal from '../components/CreateMenuItemModal';
 
 const Dashboard = () => {
-  const [items, setItems] = useState<MenuItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { items, loading, error, reload } = useMenuItems();
   const [showCreate, setShowCreate] = useState(false);
-
-  const loadItems = useCallback(() => {
-    getMenuItems()
-      .then((data) => {
-        setItems(data);
-        setError(null);
-      })
-      .catch((err: Error) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
-  useEffect(() => loadItems(), [loadItems]);
 
   return (
     <section className="py-8">
@@ -61,9 +48,7 @@ const Dashboard = () => {
                     <p className="mt-1 line-clamp-2 text-xs text-espresso/60">{item.description}</p>
                   </div>
                 </div>
-                <Button type="primary" block className="mt-auto">
-                  Assign to outlet
-                </Button>
+                <Button block className="mt-auto"> Assign </Button>
               </li>
             ))}
           </ul>
@@ -73,7 +58,7 @@ const Dashboard = () => {
       <CreateMenuItemModal
         open={showCreate}
         onClose={() => setShowCreate(false)}
-        onCreated={loadItems}
+        onCreated={reload}
       />
     </section>
   );

@@ -1,25 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from 'antd';
-import { getOutlets, type Outlet } from '../http/service/outlets';
+import { useOutlets } from '../hooks/useOutlets';
 import CreateOutletModal from '../components/CreateOutletModal';
 
 const Outlets = () => {
-  const [outlets, setOutlets] = useState<Outlet[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { outlets, loading, error, reload } = useOutlets();
   const [showCreate, setShowCreate] = useState(false);
-
-  const loadOutlets = useCallback(() => {
-    getOutlets()
-      .then((data) => {
-        setOutlets(data);
-        setError(null);
-      })
-      .catch((err: Error) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
-
-  useEffect(() => loadOutlets(), [loadOutlets]);
 
   return (
     <section className="py-8">
@@ -59,6 +45,7 @@ const Outlets = () => {
                 {outlet.description && (
                   <p className="mt-2 line-clamp-2 text-xs text-espresso/60">{outlet.description}</p>
                 )}
+                <Button block className="mt-3"> Checkout </Button>
               </li>
             ))}
           </ul>
@@ -67,7 +54,7 @@ const Outlets = () => {
       <CreateOutletModal
         open={showCreate}
         onClose={() => setShowCreate(false)}
-        onCreated={loadOutlets}
+        onCreated={reload}
       />
     </section>
   );

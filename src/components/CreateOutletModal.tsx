@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import { App, Form, Input, Modal } from 'antd';
-import { createOutlet } from '../http/service/outlets';
+import { Form, Input, Modal } from 'antd';
+import { useCreateOutlet } from '../hooks/useCreateOutlet';
 import OptionalLabel from './OptionalLabel';
 
 type CreateOutletModalProps = {
@@ -17,33 +16,15 @@ type FormValues = {
 
 const CreateOutletModal = ({ open, onClose, onCreated }: CreateOutletModalProps) => {
   const [form] = Form.useForm<FormValues>();
-  const [submitting, setSubmitting] = useState(false);
-  const { notification } = App.useApp();
+  const { create, submitting } = useCreateOutlet({ onSuccess: onCreated, onSettled: onClose });
 
-  const handleFinish = async (values: FormValues) => {
-    setSubmitting(true);
-    try {
-      const outlet = await createOutlet({
-        name: values.name,
-        location: values.location?.trim() || undefined,
-        description: values.description?.trim() || undefined,
-      });
-      notification.success({
-        title: 'Outlet created',
-        description: `"${outlet.name}" was added successfully.`,
-      });
-      onCreated();
-      onClose();
-    } catch (err) {
-      notification.error({
-        title: 'Could not create outlet',
-        description: err instanceof Error ? err.message : 'Something went wrong',
-      });
-      onClose();
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  const handleFinish = (values: FormValues) => {
+    create({
+      name: values.name,
+      location: values.location?.trim() || undefined,
+      description: values.description?.trim() || undefined,
+    });
+  }
 
   return (
     <Modal
