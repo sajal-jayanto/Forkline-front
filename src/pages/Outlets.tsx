@@ -2,10 +2,17 @@ import { useState } from 'react';
 import { Button } from 'antd';
 import { useOutlets } from '../hooks/useOutlets';
 import CreateOutletModal from '../components/CreateOutletModal';
+import type { Outlet } from '../http/service/outlets';
+import OutletDashboard from './OutletDashboard';
 
 const Outlets = () => {
   const { outlets, loading, error, reload } = useOutlets();
   const [showCreate, setShowCreate] = useState(false);
+  const [selectedOutlet, setSelectedOutlet] = useState<Outlet | null>(null);
+
+  if (selectedOutlet) {
+    return <OutletDashboard outlet={selectedOutlet} onBack={() => setSelectedOutlet(null)} />;
+  }
 
   return (
     <section className="py-8">
@@ -45,7 +52,9 @@ const Outlets = () => {
                 {outlet.description && (
                   <p className="mt-2 line-clamp-2 text-xs text-espresso/60">{outlet.description}</p>
                 )}
-                <Button block className="mt-3"> Checkout </Button>
+                <Button block className="mt-3" onClick={() => setSelectedOutlet(outlet)}>
+                  Checkout
+                </Button>
               </li>
             ))}
           </ul>

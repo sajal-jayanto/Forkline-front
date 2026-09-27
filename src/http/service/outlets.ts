@@ -1,6 +1,6 @@
 import { http } from '../client';
 
-export type Outlet = {
+export interface Outlet {
   id: number;
   name: string;
   slug: string;
@@ -9,20 +9,20 @@ export type Outlet = {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
-};
+}
 
 export async function getOutlets(): Promise<Outlet[]> {
   const { data } = await http.get<Outlet[]>('/outlet');
   return data;
 }
 
-export type CreateOutletInput = {
+export interface CreateOutletInput {
   name: string;
   description?: string;
   location?: string;
-};
+}
 
-export async function createOutlet(input: CreateOutletInput): Promise<Outlet> {
-  const { data } = await http.post<Outlet>('/outlet/create', input);
+export async function createOutlet(payload: CreateOutletInput): Promise<Outlet> {
+  const { data } = await http.post<Outlet>('/outlet/create', payload);
   return data;
 }

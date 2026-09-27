@@ -1,25 +1,36 @@
 import { useState } from 'react';
 import { Button } from 'antd';
+import type { Outlet } from '../http/service/outlets';
 import { useMenuItems } from '../hooks/useMenuItems';
-import CreateMenuItemModal from '../components/CreateMenuItemModal';
-import AssignOutletModal from '../components/AssignOutletModal';
+import CreateOrderModal from '../components/CreateOrderModal';
 
-const Dashboard = () => {
-  const { items, loading, error, reload } = useMenuItems();
-  const [showCreate, setShowCreate] = useState(false);
-  const [assignItemId, setAssignItemId] = useState<number | null>(null);
+type OutletDashboardProps = {
+  outlet: Outlet;
+  onBack: () => void;
+};
+
+const OutletDashboard = ({ outlet, onBack }: OutletDashboardProps) => {
+  const { items, loading, error, reload } = useMenuItems(outlet.id);
+  const [showOrder, setShowOrder] = useState(false);
 
   return (
     <section className="py-8">
+      <Button type="link" onClick={onBack} className="mb-2 px-0 text-plum">
+        ← Back to outlets
+      </Button>
+
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-semibold text-espresso">Dashboard</h2>
-          <p className="mt-1 text-base font-medium text-plum">Overview of all menu items</p>
+          <h2 className="text-2xl font-semibold text-espresso">{outlet.name}</h2>
+          {outlet.location && (
+            <p className="mt-1 text-base font-medium text-plum">{outlet.location}</p>
+          )}
         </div>
-        <Button type="primary" onClick={() => setShowCreate(true)}>
-          Create menu item
+        <Button type="primary" onClick={() => setShowOrder(true)}>
+          Create new order
         </Button>
       </div>
+
       <div className="mt-6 rounded-xl border border-cream-border bg-[#EFE6D8] p-4">
         {loading && <p className="text-sm text-espresso/60">Loading menu items…</p>}
         {error && <p className="text-sm text-red-700">{error}</p>}
@@ -49,25 +60,20 @@ const Dashboard = () => {
                     <p className="mt-1 line-clamp-2 text-xs text-espresso/60">{item.description}</p>
                   </div>
                 </div>
-                <Button block className="mt-auto" onClick={() => setAssignItemId(item.id)}>
-                  Assign
-                </Button>
               </li>
             ))}
           </ul>
         )}
       </div>
-      <CreateMenuItemModal
-        open={showCreate}
-        onClose={() => setShowCreate(false)}
+      <CreateOrderModal
+        open={showOrder}
+        outletId={outlet.id}
+        menuItems={items}
+        onClose={() => setShowOrder(false)}
         onCreated={reload}
-      />
-      <AssignOutletModal 
-        menuItemId={assignItemId} 
-        onClose={() => setAssignItemId(null)} 
       />
     </section>
   );
 };
 
-export default Dashboard;
+export default OutletDashboard;
