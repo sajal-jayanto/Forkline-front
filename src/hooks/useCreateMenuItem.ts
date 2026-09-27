@@ -14,8 +14,8 @@ type UseCreateMenuItemOptions = {
   onSettled: () => void;
 };
 
-// Owns the create-menu-item form: its instance, submit handler and notifications.
-export function useCreateMenuItem({ onSuccess, onSettled }: UseCreateMenuItemOptions) {
+
+export const useCreateMenuItem = ({ onSuccess, onSettled }: UseCreateMenuItemOptions) => {
   const [form] = Form.useForm<CreateMenuItemFormValues>();
   const [submitting, setSubmitting] = useState(false);
   const { notification } = App.useApp();

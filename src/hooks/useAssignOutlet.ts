@@ -13,7 +13,7 @@ type UseAssignOutletOptions = {
   onSettled: () => void;
 };
 
-export function useAssignOutlet({ menuItemId, onSettled }: UseAssignOutletOptions) {
+export const useAssignOutlet = ({ menuItemId, onSettled }: UseAssignOutletOptions)  =>{
   const [form] = Form.useForm<AssignOutletFormValues>();
   const [submitting, setSubmitting] = useState(false);
   const { notification } = App.useApp();

@@ -3,7 +3,7 @@ import { useFetch } from './useFetch';
 
 const fetchRevenueByOutlet = () => getRevenueByOutlet();
 
-export function useRevenueReport() {
+export const useRevenueReport = () => {
   const { data, loading, error, reload } = useFetch(fetchRevenueByOutlet);
   return { report: data, loading, error, reload };
 }

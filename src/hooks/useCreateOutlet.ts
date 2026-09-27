@@ -7,7 +7,7 @@ type UseCreateOutletOptions = {
   onSettled: () => void;
 };
 
-export function useCreateOutlet({ onSuccess, onSettled }: UseCreateOutletOptions) {
+export const useCreateOutlet = ({ onSuccess, onSettled }: UseCreateOutletOptions) => {
   const [submitting, setSubmitting] = useState(false);
   const { notification } = App.useApp();
 

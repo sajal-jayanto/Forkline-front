@@ -17,7 +17,7 @@ type UseCreateOrderOptions = {
   onSettled: () => void;
 };
 
-export function useCreateOrder({ outletId, onSuccess, onSettled }: UseCreateOrderOptions) {
+export const useCreateOrder = ({ outletId, onSuccess, onSettled }: UseCreateOrderOptions) => {
   const [form] = Form.useForm<CreateOrderFormValues>();
   const [submitting, setSubmitting] = useState(false);
   const { notification } = App.useApp();

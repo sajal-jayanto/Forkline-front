@@ -10,7 +10,6 @@ export interface MenuItem {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
-  // Only present when fetched with an outletId.
   outletMenuItems?: OutletMenuItem[];
 }
 
