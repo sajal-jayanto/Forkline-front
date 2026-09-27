@@ -1,0 +1,18 @@
+services:
+  forkline-front:
+    build:
+      context: .
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:9000}
+    image: forkline-front:latest
+    container_name: forkline-front
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - forkline-net
+
+networks:
+  forkline-net:
+    driver: bridge
+    name: forkline_forkline-net
